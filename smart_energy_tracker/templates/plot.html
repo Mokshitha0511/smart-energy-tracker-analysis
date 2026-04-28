@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Energy Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f3f4f6;           /* light grey, no black bars */
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* Main container */
+    .dashboard {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Top bar */
+    .dash-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(90deg, #8b5cf6, #a855f7);
+      color: #f9fafb;
+    }
+
+    .dash-title-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dash-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .dash-title-main {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .dash-title-sub {
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
+    .dash-link {
+      font-size: 12px;
+      text-decoration: none;
+      color: #f9fafb;
+      opacity: 0.9;
+    }
+
+    /* Content area */
+    .dash-content {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* Card that holds the plot */
+    .plot-card {
+      margin-top: 10px;
+      background: #f9fafb;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      padding: 14px;
+    }
+
+    .plot-inner {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .plot-img {
+      display: block;
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Footer */
+    .dash-footer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-link {
+      font-size: 12px;
+      text-decoration: none;
+      color: #4f46e5;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      .dashboard {
+        border-radius: 12px;
+      }
+      .plot-img {
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Top bar -->
+  <div class="dash-header">
+    <div class="dash-title-block">
+      <div class="dash-logo">⚡</div>
+      <div>
+        <div class="dash-title-main">Smart Energy Dashboard</div>
+        <div class="dash-title-sub">Time-series visualization with anomaly detection</div>
+      </div>
+    </div>
+    <a href="{{ url_for('upload_file') }}" class="dash-link">← Upload another CSV</a>
+  </div>
+
+  <!-- Content -->
+  <div class="dash-content">
+    <div>
+      <div class="section-title">Energy Consumption Visualization</div>
+      <div class="section-subtitle">
+        This plot shows power usage over time, with detected anomalies highlighted in red.
+      </div>
+    </div>
+
+    <div class="plot-card">
+      <div class="plot-inner">
+        <!-- Your existing plot endpoint -->
+        <img class="plot-img" src="{{ url_for('plot_image') }}" alt="Energy Consumption Visualization">
+      </div>
+
+      <div class="dash-footer">
+        <span>Data source: Household power consumption time-series</span>
+        {% if anomaly_file %}
+          <a href="{{ url_for('download_anomaly', file=anomaly_file) }}">Download anomaly CSV</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

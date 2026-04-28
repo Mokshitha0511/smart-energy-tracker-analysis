@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SET BOT – Upload Result</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f2f3f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .chat-widget {
+      width: 380px;
+      max-width: 100%;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: #a855f7;
+      color: #f9fafb;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bot-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .bot-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .bot-status {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .chat-body {
+      padding: 16px 18px;
+      background: #ffffff;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .bubble-row {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .bubble-row.user {
+      align-items: flex-end;
+    }
+
+    .bubble-label {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .bubble {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 80%;
+    }
+
+    .bubble-bot {
+      background: #f3f4ff;
+      color: #111827;
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble-user {
+      background: #a855f7;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .think-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #9ca3af;
+      margin-right: 3px;
+    }
+
+    .link-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 999px;
+      text-decoration: none;
+      background: #a855f7;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-widget">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="bot-avatar">⚡</div>
+    <div>
+      <div class="bot-name">SET BOT</div>
+      <div class="bot-status">Offline · Smart Energy Tracker</div>
+    </div>
+  </div>
+
+  <!-- Chat body -->
+  <div class="chat-body">
+
+    <!-- User bubble with file name -->
+    <div class="bubble-row user">
+      <div class="bubble-label">You</div>
+      <div class="bubble bubble-user">
+        📄 {{ filename }}
+      </div>
+    </div>
+
+    <!-- Bot "thinking" bubble -->
+    <div class="bubble-row">
+      <div class="bubble-label">SET BOT</div>
+      <div class="bubble bubble-bot">
+        <span class="think-dot"></span>
+        <span class="think-dot"></span>
+        <span class="think-dot"></span>
+        &nbsp;Analyzing your smart energy data…
+      </div>
+    </div>
+
+    <!-- Bot result bubble with link to full graph page -->
+    <div class="bubble-row">
+      <div class="bubble-label">SET BOT</div>
+      <div class="bubble bubble-bot">
+        Your graph is ready!👍<br>
+        Click below to view your smart energy usage and anomaly details.
+        <br>
+        <a class="link-btn" href="{{ url_for('plot_page', anomaly = anomaly_file) }}">View</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
